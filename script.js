@@ -347,7 +347,17 @@ function loadMember() {
         }
       }
 
-      if (memberPosition) memberPosition.textContent = position ? "직위 : " + position : "";
+    const positionRow = document.getElementById("positionRow");
+
+if (memberPosition && positionRow) {
+  if (position) {
+    positionRow.style.display = "flex";
+    memberPosition.textContent = "직위 : " + position;
+  } else {
+    positionRow.style.display = "none";
+    memberPosition.textContent = "";
+  }
+}
 
       if (memberStatus) {
         memberStatus.textContent = "회원상태 : " + status;
