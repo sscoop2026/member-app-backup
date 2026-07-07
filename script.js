@@ -503,3 +503,9 @@ function removeHomeInstallModal() {
   const modal = document.getElementById("homeInstallModal");
   if (modal) modal.remove();
 }
+function refreshMemberTime() {
+  const memberTime = document.getElementById("memberTime");
+  if (!memberTime) return;
+
+  memberTime.innerHTML = `조회시각<br>${formatNow()}`;
+}

@@ -409,3 +409,23 @@ body {
 .home-install-choice:active{
   transform:scale(.98);
 }
+.member-refresh-btn {
+  display: block;
+  margin: 10px auto 0;
+  padding: 7px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.member-refresh-btn i {
+  margin-right: 4px;
+}
+
+.member-refresh-btn:active {
+  transform: translateY(1px);
+}
