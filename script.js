@@ -6,6 +6,7 @@ const MEMBER_CODE_STORAGE_KEY = "seosan_saved_member_code_0701";
 let CURRENT_NOTICE_KEY = "";
 let CURRENT_NOTICES = [];
 let PENDING_NOTICE_ID = "";
+let IS_GUEST_NOTICE_MODE = false;
 
 window.addEventListener("DOMContentLoaded", function () {
   PENDING_NOTICE_ID = getNoticeIdFromUrl();
@@ -16,15 +17,28 @@ window.addEventListener("DOMContentLoaded", function () {
 
   checkMemberBeforeAppStart();
 });
+
 function checkMemberBeforeAppStart() {
+  const params = new URLSearchParams(window.location.search);
+  const codeFromUrl = (params.get("code") || "").trim();
+  const savedCode =
+    localStorage.getItem(MEMBER_CODE_STORAGE_KEY) ||
+    sessionStorage.getItem(MEMBER_CODE_STORAGE_KEY) ||
+    "";
+
+  if (!codeFromUrl && PENDING_NOTICE_ID && !savedCode) {
+    IS_GUEST_NOTICE_MODE = true;
+
+    prepareNoticeDetailPage();
+    showPage("noticeDetailPage");
+
+    loadNotices();
+    return;
+  }
+
   const code = getMemberCode();
 
   if (!code) {
-    if (PENDING_NOTICE_ID) {
-      prepareNoticeDetailPage();
-      showPage("noticeDetailPage");
-    }
-
     loadNotices();
     loadPartners();
     loadMember();
@@ -55,6 +69,7 @@ function checkMemberBeforeAppStart() {
       loadMember();
     });
 }
+
 
 function updateStoredMemberCode() {
   const params = new URLSearchParams(window.location.search);
@@ -195,6 +210,17 @@ function loadNotices() {
       const activeNotices = notices.filter(function (item) {
         return String(item["상태"] || "진행중").trim() === "진행중";
       });
+
+      if (IS_GUEST_NOTICE_MODE) {
+        if (mainNotice) mainNotice.textContent = "전달받은 공지를 확인해 주세요.";
+        if (list) list.innerHTML = `<div class="card"><p>공지 목록은 회원 전용 서비스입니다.</p></div>`;
+        if (fullList) fullList.innerHTML = `<div class="card"><p>공지 목록은 회원 전용 서비스입니다.</p></div>`;
+
+        if (PENDING_NOTICE_ID) {
+          renderNoticeDetail(PENDING_NOTICE_ID, notices);
+        }
+        return;
+      }
 
       if (mainNotice) {
         mainNotice.textContent = activeNotices.length > 0
@@ -529,6 +555,42 @@ function loadMember() {
     });
 }
 
+function showGuestOnlyGuide(pageId, btn) {
+  const page = document.getElementById(pageId);
+  if (!page) return;
+
+  page.innerHTML = `
+    <div class="section">
+      <h2>회원 전용 안내</h2>
+    </div>
+    <div class="card">
+      <h3>회원 전용 서비스입니다.</h3>
+      <p>공지 전체 목록, 제휴업체 혜택, 모바일 회원증은 회원 가입 후 이용하실 수 있습니다.</p>
+
+      <hr style="margin:20px 0;border:none;border-top:1px solid #e5e7eb;">
+
+      <p>회원 가입 및 이용 문의</p>
+      <p>서산시소상공인연합회</p>
+
+      <a href="tel:0416639999" class="phone-btn">
+        ☎ 041-663-9999
+      </a>
+    </div>
+  `;
+
+  document.querySelectorAll(".page").forEach(function (page) {
+    page.classList.remove("active");
+  });
+
+  page.classList.add("active");
+
+  document.querySelectorAll("nav button").forEach(function (button) {
+    button.classList.remove("active");
+  });
+
+  if (btn) btn.classList.add("active");
+}
+
 function showMemberAccessGuide(message) {
   const memberPage = document.getElementById("memberPage");
   if (!memberPage) return;
@@ -538,23 +600,17 @@ function showMemberAccessGuide(message) {
       <h2>모바일 회원증</h2>
     </div>
     <div class="card">
-      <h3>모바일 회원증 이용 안내</h3>
+      <h3>모바일 회원증은 회원 전용 서비스입니다.</h3>
 
-      <p>현재 접속하신 링크는 공지사항 확인용 링크입니다.</p>
-
-      <p>모바일 회원증은 회원 전용 앱을 이용해 주세요.</p>
+      <p>회원 가입 및 이용 문의는 서산시소상공인연합회로 연락해 주세요.</p>
 
       <hr style="margin:20px 0;border:none;border-top:1px solid #e5e7eb;">
 
-      <h3 style="margin-bottom:10px;">📞 문의</h3>
-
       <p>서산시소상공인연합회</p>
 
-      <p>
       <a href="tel:0416639999" class="phone-btn">
-  ☎ 041-663-9999
-</a>
-      </p>
+        ☎ 041-663-9999
+      </a>
     </div>
   `;
 }
@@ -601,6 +657,11 @@ function openLink(url) {
 
 function showPage(pageId, btn) {
   updateStoredMemberCode();
+
+  if (IS_GUEST_NOTICE_MODE && !["homePage", "noticeDetailPage", "contactPage"].includes(pageId)) {
+    showGuestOnlyGuide(pageId, btn);
+    return;
+  }
 
   if (pageId === "memberPage" && !getMemberCode()) {
     showMemberAccessGuide();
