@@ -34,9 +34,11 @@ function doGet(e) {
 
 function sanitizeCallback(value) {
   const callback = String(value || "").trim();
+
   if (/^[a-zA-Z_$][0-9a-zA-Z_$\.]*$/.test(callback)) {
     return callback;
   }
+
   return "";
 }
 
@@ -49,15 +51,17 @@ function getNotices() {
 
   const notices = values.map(function(row) {
     let item = {};
+
     headers.forEach(function(header, index) {
-      item[header] = row[index];
+      item[String(header).trim()] = row[index];
     });
+
     return item;
   });
 
   return notices
     .filter(function(item) {
-      return String(item["상태"] || "").trim() === "진행중";
+      return String(item["제목"] || "").trim() !== "";
     })
     .reverse();
 }
@@ -71,9 +75,11 @@ function getPartners() {
 
   const partners = values.map(function(row) {
     let item = {};
+
     headers.forEach(function(header, index) {
-      item[header] = row[index];
+      item[String(header).trim()] = row[index];
     });
+
     return item;
   });
 

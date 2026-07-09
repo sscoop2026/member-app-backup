@@ -44,11 +44,11 @@ body {
 
   .title b {
     display: block;
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .title span {
-    font-size: 12px;
+    font-size: 14px;
     opacity: 0.9;
   }
 
@@ -70,12 +70,13 @@ body {
 
   .notice small {
     opacity: 0.85;
+    font-size: 14px;
   }
 
   .notice strong {
     display: block;
     margin-top: 4px;
-    font-size: 17px;
+    font-size: 19px;
   }
 
   main {
@@ -101,12 +102,13 @@ body {
   .menu b {
     display: block;
     margin-top: 6px;
+    font-size: 18px;
   }
 
   .menu span {
     display: block;
     color: #6b7280;
-    font-size: 12px;
+    font-size: 14px;
     margin-top: 3px;
   }
 
@@ -115,7 +117,7 @@ body {
   }
 
   .section h2 {
-    font-size: 16px;
+    font-size: 19px;
     margin: 0;
   }
 
@@ -130,7 +132,7 @@ body {
 
   .tag {
     display: inline-block;
-    font-size: 11px;
+    font-size: 15px;
     border-radius: 999px;
     padding: 4px 8px;
     background: #eff6ff;
@@ -145,15 +147,16 @@ body {
   }
 
   .card h3 {
-    font-size: 15px;
+    font-size: 18px;
     margin: 0 0 6px;
   }
 
-  .card p {
-    font-size: 13px;
-    color: #6b7280;
-    margin: 0;
-  }
+.card p {
+  font-size: 15px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.45;
+}
 
   .btn {
     margin-top: 12px;
@@ -163,6 +166,7 @@ body {
     background: #2f6fed;
     color: white;
     font-weight: 800;
+    font-size: 17px;
     padding: 11px;
   }
 
@@ -184,7 +188,8 @@ body {
     border: 0;
     background: transparent;
     color: #6b7280;
-    font-size: 12px;
+    font-size: 18px;
+    font-weight: 800;
     padding: 5px;
   }
 
@@ -245,7 +250,7 @@ body {
   .member-realtime-text {
     text-align: center;
     color: #1d4ed8 !important;
-    font-size: 13px !important;
+    font-size: 15px !important;
     font-weight: 800;
     margin: 0 0 16px !important;
   }
@@ -295,7 +300,7 @@ body {
   .member-card #memberTime {
     margin: 0;
     color: #374151;
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.45;
   }
 
@@ -319,7 +324,7 @@ body {
     background: #1d4ed8;
     color: white;
     text-align: center;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 800;
     padding: 11px 8px;
     margin: 18px -18px -18px;
@@ -345,7 +350,7 @@ body {
 
 .install-box p {
   margin: 0 0 12px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   color: #374151;
 }
@@ -357,7 +362,7 @@ body {
   border-radius: 14px;
   background: #2563eb;
   color: #ffffff;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 900;
   cursor: pointer;
 }
@@ -401,7 +406,7 @@ body {
   border-radius:14px;
   background:#2563eb;
   color:#fff;
-  font-size:16px;
+  font-size:18px;
   font-weight:700;
   cursor:pointer;
 }
@@ -417,7 +422,7 @@ body {
   border-radius: 999px;
   background: #f3f4f6;
   color: #6b7280;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
   cursor: pointer;
 }
@@ -428,4 +433,74 @@ body {
 
 .member-refresh-btn:active {
   transform: translateY(1px);
+}
+.notice-closed {
+  background: #f1f1f1 !important;
+  color: #777 !important;
+  opacity: 0.75;
+}
+
+.notice-closed-btn {
+  background: #999 !important;
+  cursor: not-allowed;
+}
+.notice-closed {
+  opacity: 0.6;
+}
+
+.notice-closed-tag {
+  background: #9ca3af;
+}
+
+.notice-closed-btn {
+  background: #bdbdbd !important;
+  color: #ffffff !important;
+  cursor: not-allowed;
+}
+#memberPage .card p{
+    font-size:16px;
+    line-height:1.6;
+}
+
+#memberPage .card a{
+    font-size:17px;
+    font-weight:700;
+    color:#2563eb;
+    text-decoration:none;
+}
+#memberPage .card a[href^="tel"] {
+  display: block;
+  margin-top: 8px;
+  padding: 13px 16px;
+  border-radius: 14px;
+  background: #2563eb;
+  color: #ffffff !important;
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+}
+
+#memberPage .card a[href^="tel"]:active {
+  transform: translateY(1px);
+}
+.phone-btn{
+  display:block;
+  width:100%;
+  box-sizing:border-box;
+  margin-top:12px;
+  padding:14px;
+  border-radius:14px;
+  background:#2563eb;
+  color:#fff !important;
+  text-align:center;
+  text-decoration:none;
+  font-size:18px;
+  font-weight:900;
+  box-shadow:0 4px 12px rgba(37,99,235,.25);
+}
+
+.phone-btn:active{
+  transform:scale(.98);
 }
