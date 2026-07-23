@@ -382,7 +382,7 @@ function loadPartners() {
       const partnerPage = document.getElementById("partnerPage");
       if (!partnerPage) return;
 
-      let html = `<div class="section"><h2>제휴업체</h2></div>`;
+    let html = "";
 
       if (!partners || partners.length === 0) {
         html += `<div class="card"><p>등록된 제휴업체가 없습니다.</p></div>`;
@@ -399,10 +399,18 @@ function loadPartners() {
         const link = escapeAttr(item["링크"] || "");
         const buttonName = escapeHtml(item["버튼명"] || "자세히 보기");
         const iconClass = getPartnerIconClass(item["아이콘"] || item["업종"] || "");
+        const logoFile = String(item["로고파일"] || "").trim();
+
+const partnerImage = logoFile
+  ? `<img src="logos/${encodeURIComponent(logoFile)}"
+      alt="${name}"
+      style="width:100%;height:100%;object-fit:contain;"
+      onerror="this.outerHTML='<i class=&quot;fa-solid ${iconClass}&quot;></i>';">`
+  : `<i class="fa-solid ${iconClass}"></i>`;
 
         html += `
           <div class="partner-card">
-            <div class="partner-icon"><i class="fa-solid ${iconClass}"></i></div>
+          <div class="partner-icon">${partnerImage}</div>
             <div class="partner-body">
               <h3 class="partner-name">${name}</h3>
               <p class="partner-benefit">${benefit}</p>
@@ -565,12 +573,14 @@ function showGuestOnlyGuide(pageId, btn) {
     </div>
     <div class="card">
       <h3>회원 전용 서비스입니다.</h3>
-      <p>공지 전체 목록, 제휴업체 혜택, 모바일 회원증은 회원 가입 후 이용하실 수 있습니다.</p>
+     <p class="guest-text">
+  공지 전체 목록, 제휴업체 혜택, 모바일 회원증은 회원 가입 후 이용하실 수 있습니다.
+</p>
 
-      <hr style="margin:20px 0;border:none;border-top:1px solid #e5e7eb;">
+<hr style="margin:20px 0;border:none;border-top:1px solid #e5e7eb;">
 
-      <p>회원 가입 및 이용 문의</p>
-      <p>서산시소상공인연합회</p>
+<p class="guest-text">회원 가입 및 이용 문의</p>
+<p class="guest-text">서산시소상공인연합회</p>
 
       <a href="tel:0416639999" class="phone-btn">
         ☎ 041-663-9999
